@@ -1,7 +1,7 @@
 import prisma from "@/app/lib/prisma";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import GitHubProvider from "next-auth/providers/github";
-import nextAuth from "next-auth";
+import nextAuth from "next-auth/next";
 
 export const authOptions = {
     secret: process.env.NEXTAUTH_SECRET,
