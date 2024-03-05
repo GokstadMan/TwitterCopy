@@ -19,7 +19,7 @@ export default function Home() {
         </div>
         <h1 className="text-2xl font-semibold">Happening now</h1>
         <h2 className="text-xl">Join today</h2>
-        <button className="bg-blue-400 p-2 text-white rounded-full hover:bg-blue-500" onClick={() => signIn('github')}>Sign In with GitHub</button>
+        <button className="bg-[#60a5fa] p-2 text-white rounded-full hover:bg-blue-500" onClick={() => signIn('github')}>Sign In with GitHub</button>
         <p className="text-sm">Do not have a GitHub account yet? Sign up <a href="https://github.com" target="_blank" className="underline">here</a>.</p>
       </div>
     </div>
