@@ -19,7 +19,14 @@ const api = {
     createPost: async(postData:{content: string})=> {
         const {data} = await axios.post("/api/create-post", postData);
         return data;
+    },
+
+    getPosts: async()=>{
+        const {data} = await axios.get("/api/get-posts/");
+        return data;
     }
+
+
 }
 
 export default api;
