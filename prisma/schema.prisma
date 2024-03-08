@@ -54,6 +54,7 @@ model User {
   followed      Follow[] @relation("followed")
   posts         Post[]
   likes         Like[]
+  replies       Reply[]
 }
 
 model VerificationToken {
@@ -78,6 +79,7 @@ model Post {
   content       String
   created_at    DateTime @default(now())
   likes         Like[]
+  replies       Reply[]
 }
 
 model Like {
@@ -86,4 +88,14 @@ model Like {
   postId        String
   user          User @relation(references: [id], fields: [userId],onDelete: Cascade)
   userId        String
+}
+
+model Reply {
+  id            String    @id @default(cuid())
+  post          Post @relation(references: [id], fields: [postId], onDelete: Cascade)
+  postId        String
+  user          User @relation(references: [id], fields: [userId],onDelete: Cascade)
+  userId        String
+  content       String
+  created_at    DateTime @default(now())
 }

@@ -39,8 +39,12 @@ const api = {
     likePost: async(postId:string)=>{
         const {data} = await axios.post("/api/like-post/" + postId);
         return data;
-    }
+    },
 
+    replyToPost: async(postId:string,content:{content:string})=>{
+        const {data} = await axios.post("/api/reply-tp-post/" + postId,content);
+        return data;
+    }
 
 }
 

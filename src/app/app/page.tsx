@@ -1,7 +1,7 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import api from "@/app/lib/axios";
 import { useState } from "react";
 import Post from "@/components/Post";
@@ -11,13 +11,16 @@ export default function App() {
   const { data:session} = useSession();
   const [postData,setPostData] = useState("");
 
+  const queryClient = useQueryClient();
+
   const posts = useQuery({
     queryKey:["posts"],
     queryFn:api.getPosts
   });
 
   const createPost = useMutation({
-    mutationFn: ()=>api.createPost({content:postData})
+    mutationFn: ()=>api.createPost({content:postData}),
+    onSuccess: ()=>queryClient.invalidateQueries()
   });
 
     return (

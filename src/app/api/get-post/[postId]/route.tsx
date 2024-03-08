@@ -24,7 +24,14 @@ export async function GET (request: NextRequest, { params }: { params: { postId:
         where: { id: postId },
         include: {
             user: true, 
-            likes: true,        
+            likes: true, 
+            replies: {
+                include:{user:true},
+                orderBy: {
+                    created_at:"desc"
+                }
+            }
+       
         }
     });
 
