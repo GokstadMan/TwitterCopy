@@ -3,7 +3,7 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import api from "@/app/lib/axios";
 import { redirect, useParams } from "next/navigation";
 import { useSession } from "next-auth/react";
-// import { Post } from "@/app/
+import { Post } from "@/components/Post";
 // import PageTitle from "@/components/PageTitle";
 
 export default function Profile () {

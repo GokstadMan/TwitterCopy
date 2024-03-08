@@ -1,35 +1,35 @@
 import { getServerSession } from "next-auth";
 import { NextRequest,NextResponse } from "next/server";
 import prisma from "@/app/lib/prisma";
-import { authOptions } from "../auth/[...nextauth]/route";
+import { authOptions } from "../../auth/[...nextauth]/route";
 
-export async function GET (request: NextRequest) {
+export async function GET (request: NextRequest, { params }: { params: { userId: string } }) {
 
     const session = await getServerSession(authOptions);
+    const userId = params.userId;
 
     if (!session) {
         return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
     const user = await prisma.user.findUnique({
-        where: { email: session.user?.email ?? "" },
-        include: { following: true }
+        where: { id: userId }
     });
 
     if (!user) {
-        return NextResponse.json({ message: "User could not be found" }, { status: 402 });
+        return NextResponse.json({ message: "User not found" }, { status: 404 });
     }
 
     const posts = await prisma.post.findMany({
-        include: { user: true, likes: true },
+        where: { userId: user.id},
+        include: { user: true,likes:true},
         orderBy: {
             created_at: 'desc'
         }
     });
 
     let response = [];
-    for (let post of posts) {
-
+    for (const post of posts) {
         let postWithLikeStatus = {
             ...post,
             requesterHasLiked: false
@@ -40,7 +40,7 @@ export async function GET (request: NextRequest) {
                     ...post,
                     requesterHasLiked: true
                 }
-                break;
+                // break;
             } else {
                 postWithLikeStatus = {
                     ...post,
@@ -48,16 +48,7 @@ export async function GET (request: NextRequest) {
                 }
             }
         }
-
-        for (const follow of user.following) {
-            if (follow.followedId === post.userId) {
-                response.push(postWithLikeStatus);
-            }
-        }
-
-        if (post.userId === user.id) {
-            response.push(postWithLikeStatus);
-        }
+        response.push(postWithLikeStatus);
     }
 
     return NextResponse.json(response, { status: 200 });

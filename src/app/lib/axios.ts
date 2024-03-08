@@ -24,6 +24,21 @@ const api = {
     getPosts: async()=>{
         const {data} = await axios.get("/api/get-posts/");
         return data;
+    },
+
+    getUserPosts: async(userId:string)=> {
+        const {data} = await axios.get("/api/get-user-posts/"+ userId);
+        return data;
+    },
+
+    getPost: async(postId:string)=>{
+        const {data} = await axios.get("/api/get-post/" + postId);
+        return data;
+    },
+
+    likePost: async(postId:string)=>{
+        const {data} = await axios.post("/api/like-post/" + postId);
+        return data;
     }
 
 
