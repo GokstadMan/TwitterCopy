@@ -44,6 +44,11 @@ const api = {
     replyToPost: async(postId:string,content:{content:string})=>{
         const {data} = await axios.post("/api/reply-tp-post/" + postId,content);
         return data;
+    },
+
+    searchUsers: async(content:{content:string})=>{
+        const {data} = await axios.post("/api/search-users/", content);
+        return data;
     }
 
 }
