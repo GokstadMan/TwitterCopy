@@ -7,6 +7,7 @@ import { useSession } from "next-auth/react";
 import Post from "@/components/Post";
 import { useState } from "react";
 import Link from "next/link";
+import PageTitle from "@/components/PageTitle";
 
 export default function PostPage () {
 
@@ -45,7 +46,7 @@ export default function PostPage () {
                       <button onClick={() => replyToPost.mutate()} className="bg-blue-400 text-center py-2 px-4 text-white rounded-full hover:bg-blue-500">Reply</button>
                   </div>
               </div>
-              {post.data.replies.map((reply, index) => (
+              {post.data.replies.map((reply:any, index:any) => (
                   <div key={index} className="flex flex-col p-4 gap-2 border-b-2 border-gray-300">
                       <div className="flex gap-2">
                           <img src={reply.user.image} className="w-14 h-14 rounded-full" /> 
